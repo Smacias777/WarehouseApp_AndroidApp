@@ -25,6 +25,7 @@
         android:layout_width="260dp"
         android:layout_height="54dp"
         android:backgroundTint="#292626"
+        android:onClick="addItem"
         android:text="Add New Item"
         android:textColor="#FF5722"
         android:textStyle="bold"
