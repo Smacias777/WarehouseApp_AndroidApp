@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 public class AddItem extends AppCompatActivity {
 
+    public static final String MESSAGE = "Something"; // key used to pass data using 'intent extras'
     private String name = "";
     private String type = "";
     private String brand = "";
@@ -29,7 +30,6 @@ public class AddItem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
     }
-
     /**
      * Will open new activity when 'enter' button is clicked
      * @param obj is the object clicked
@@ -56,8 +56,14 @@ public class AddItem extends AppCompatActivity {
         }
         else {
             Intent intent = new Intent(this, Barcode.class);
+            // passing the items name so that it can be used to create a qr code
+            String message = name;
+            intent.putExtra(MESSAGE, message);
             startActivity(intent);
         }
+
+
+
     }
     /**
      * Sets the type, based on the button clicked by user

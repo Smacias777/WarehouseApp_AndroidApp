@@ -24,13 +24,14 @@
         android:id="@+id/button_add_item"
         android:layout_width="260dp"
         android:layout_height="54dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="#292626"
         android:onClick="addItem"
         android:text="Add New Item"
         android:textColor="#FF5722"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -80,8 +81,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="142dp"
-        android:layout_height="188dp"
+        android:layout_width="93dp"
+        android:layout_height="136dp"
         android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
