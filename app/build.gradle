@@ -30,9 +30,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
 
     implementation platform('com.google.firebase:firebase-bom:26.8.0')
     implementation 'com.google.firebase:firebase-analytics'
+
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
 
 }

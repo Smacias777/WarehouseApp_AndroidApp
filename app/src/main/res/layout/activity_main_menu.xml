@@ -41,6 +41,7 @@
         android:layout_height="54dp"
         android:layout_marginTop="52dp"
         android:backgroundTint="#292626"
+        android:onClick="scanIn"
         android:text="Scan In"
         android:textColor="#FF5722"
         android:textStyle="bold"

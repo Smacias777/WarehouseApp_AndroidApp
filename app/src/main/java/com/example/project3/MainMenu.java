@@ -20,4 +20,11 @@ public class MainMenu extends AppCompatActivity {
         Intent intent = new Intent(this, AddItem.class);
         startActivity(intent);
     }
+
+    public void scanIn(View obj)
+    {
+        Intent intent  = new Intent(this, ScanIn.class);
+        startActivity(intent);
+    }
 }
+
