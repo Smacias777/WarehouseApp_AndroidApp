@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.project3">
 
+
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -12,18 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ScanIn"></activity>
-        <activity android:name=".Barcode" />
-        <activity
+        <activity android:name=".Register"></activity>
+        <activity android:name=".MainMenu"></activity>
+        <activity android:name=".Barcode" /><activity
             android:name=".AddItem"
-            android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".MainMenu">
+            android:parentActivityName=".MainMenu"></activity>
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+
+
+
     </application>
 
 </manifest>
