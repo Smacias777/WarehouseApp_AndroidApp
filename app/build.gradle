@@ -33,8 +33,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.budiyev.android:code-scanner:2.1.0'
 
-    implementation platform('com.google.firebase:firebase-bom:26.8.0')
+    implementation platform('com.google.firebase:firebase-bom:26.8.0') // Bill of Material(BoM)
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-database'      // allows us to use google realtime database
 
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
 

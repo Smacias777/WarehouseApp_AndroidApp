@@ -12,6 +12,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+
 public class AddItem extends AppCompatActivity {
 
     public static final String MESSAGE = "Something"; // key used to pass data using 'intent extras'
@@ -23,6 +27,7 @@ public class AddItem extends AppCompatActivity {
     private String price = "";
     private String color = "";
     private String comments = "";
+    private DatabaseReference reff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,6 +41,8 @@ public class AddItem extends AppCompatActivity {
      */
     public void clickEnter(View obj)
     {
+        reff = FirebaseDatabase.getInstance().getReference().child("item");
+
         name = ((TextView) findViewById(R.id.name_input)).getText().toString();
         brand = ((TextView) findViewById(R.id.brand_input)).getText().toString();
         quantity = ((TextView) findViewById(R.id.quantity_input)).getText().toString();
@@ -55,8 +62,14 @@ public class AddItem extends AppCompatActivity {
          //   toast.show();
         }
         else {
+            // Write a message to the database
+
+            // Creating a new new 'Item' object (will be placed into database)
+            Item newItem = new Item(name, type, brand, condition, quantity, price, color, comments);
+
+            reff.push().setValue(newItem);
             Intent intent = new Intent(this, Barcode.class);
-            // passing the items name so that it can be used to create a qr code
+            // passing the item's name (as a intent extra bundle) so that it can be used to create a qr code
             String message = name;
             intent.putExtra(MESSAGE, message);
             startActivity(intent);
