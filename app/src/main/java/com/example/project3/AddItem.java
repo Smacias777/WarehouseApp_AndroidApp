@@ -25,6 +25,9 @@ public class AddItem extends AppCompatActivity {
     private String comments = "";
 
     @Override
+	/**
+	* @param savedInstanceState
+	*/
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);

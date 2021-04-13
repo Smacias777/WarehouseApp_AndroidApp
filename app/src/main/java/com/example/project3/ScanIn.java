@@ -21,6 +21,9 @@ public class ScanIn extends AppCompatActivity {
     private CodeScanner mCodeScanner;
 
     @Override
+		/**
+	* @param savedInstanceState
+	**/
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_in);
@@ -32,6 +35,9 @@ public class ScanIn extends AppCompatActivity {
         mCodeScanner.setDecodeCallback(new DecodeCallback()
         {
             @Override
+				/**
+	* @param result
+	**/
             public void onDecoded(@NonNull final Result result)  // results contains the 'word' that the qr code represents
             {
                 runOnUiThread(new Runnable()
@@ -48,6 +54,9 @@ public class ScanIn extends AppCompatActivity {
         scannerView.setOnClickListener(new View.OnClickListener()
         {
             @Override
+				/**
+	* @param view
+	**/
             public void onClick(View view)
             {
                 mCodeScanner.startPreview();
@@ -83,6 +92,9 @@ public class ScanIn extends AppCompatActivity {
     }
 
     @Override
+		/**
+	* @param requestCode, permissions, grantResults
+	**/
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }

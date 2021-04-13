@@ -14,6 +14,11 @@ public class Item {
     private String price;
     private String color;
     private String comments;
+	
+	/**
+	* param name, type, brand, condition, quantity, price, color, comments 
+	*
+	**/
 
     public Item(String name, String type, String brand, String condition, String quantity, String price, String color, String comments) {
         this.name = name;
@@ -25,7 +30,9 @@ public class Item {
         this.color = color;
         this.comments = comments;
     }
-
+	/** 
+	* @return name
+	*/
     public String getName() {
         return name;
     }
@@ -33,7 +40,9 @@ public class Item {
     public void setName(String name) {
         this.name = name;
     }
-
+	/** 
+	* @return type
+	*/
     public String getType() {
         return type;
     }
@@ -41,7 +50,9 @@ public class Item {
     public void setType(String type) {
         this.type = type;
     }
-
+	/** 
+	* @return brand
+	*/
     public String getBrand() {
         return brand;
     }
@@ -49,7 +60,9 @@ public class Item {
     public void setBrand(String brand) {
         brand = brand;
     }
-
+	/** 
+	* @return condition
+	*/
     public String getCondition() {
         return condition;
     }
@@ -57,7 +70,9 @@ public class Item {
     public void setCondition(String condition) {
         this.condition = condition;
     }
-
+	/** 
+	* @return quantity
+	*/
     public String getQuantity() {
         return quantity;
     }
@@ -65,7 +80,9 @@ public class Item {
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
-
+	/** 
+	* @return price
+	*/
     public String getPrice() {
         return price;
     }
@@ -73,7 +90,9 @@ public class Item {
     public void setPrice(String price) {
         this.price = price;
     }
-
+	/** 
+	* @return color
+	*/
     public String getColor() {
         return color;
     }
@@ -81,7 +100,9 @@ public class Item {
     public void setColor(String color) {
         this.color = color;
     }
-
+	/** 
+	* @return comments
+	*/
     public String getComments() {
         return comments;
     }
