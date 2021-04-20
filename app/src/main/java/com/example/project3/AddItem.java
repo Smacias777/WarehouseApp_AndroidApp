@@ -27,6 +27,7 @@ public class AddItem extends AppCompatActivity {
     private String price = "";
     private String color = "";
     private String comments = "";
+
     private DatabaseReference reff;
 
     @Override
@@ -41,7 +42,7 @@ public class AddItem extends AppCompatActivity {
      */
     public void clickEnter(View obj)
     {
-        reff = FirebaseDatabase.getInstance().getReference().child("item");
+        reff = FirebaseDatabase.getInstance().getReference().child("Items"); // reference to our database
 
         name = ((TextView) findViewById(R.id.name_input)).getText().toString();
         brand = ((TextView) findViewById(R.id.brand_input)).getText().toString();
@@ -57,26 +58,23 @@ public class AddItem extends AppCompatActivity {
             text.setText("Enter all Fields!");
             text.setTypeface(null, Typeface.BOLD);                 // makes text bold
             text.setTextColor(Color.parseColor("#FF0000")); // changes text color to red
-
          //   Toast toast = new Toast.makeText(getApplicationContext(), R.string.toast_message_error, Toast.LENGTH_SHORT);
          //   toast.show();
         }
         else {
             // Write a message to the database
-
             // Creating a new new 'Item' object (will be placed into database)
             Item newItem = new Item(name, type, brand, condition, quantity, price, color, comments);
 
-            reff.push().setValue(newItem);
+            // Adding 'newItem'
+            reff.child(name).setValue(newItem);
             Intent intent = new Intent(this, Barcode.class);
+
             // passing the item's name (as a intent extra bundle) so that it can be used to create a qr code
             String message = name;
             intent.putExtra(MESSAGE, message);
             startActivity(intent);
         }
-
-
-
     }
     /**
      * Sets the type, based on the button clicked by user

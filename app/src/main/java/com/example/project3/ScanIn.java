@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,8 @@ public class ScanIn extends AppCompatActivity {
     private CodeScanner mCodeScanner;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_in);
 
@@ -39,8 +41,8 @@ public class ScanIn extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(ScanIn.this, result.getText(), Toast.LENGTH_SHORT).show();  // displays toast of what the QR code represents
-                        TextView text = findViewById(R.id.camera_text);
-                        text.setText(result.getText());
+                     //   TextView text = findViewById(R.id.camera_text);
+                     //   text.setText(result.getText());
                     }
                 });
             }
@@ -69,21 +71,23 @@ public class ScanIn extends AppCompatActivity {
     private void setupPermissions()
     {
         int permission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA);
-
         if(permission != PackageManager.PERMISSION_GRANTED)
         {
-            makeRequest();
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA} , CAMERA_REQUEST_CODE );
         }
     }
 
-    private void makeRequest()
-    {
-        String [] arr = {android.Manifest.permission.CAMERA};
-        ActivityCompat.requestPermissions(this, arr , CAMERA_REQUEST_CODE );
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
+
+    public void gotoInventory(View obj)
+    {
+        Intent intent = new Intent(this, Inventory.class);
+        startActivity(intent);
+    }
+
 }

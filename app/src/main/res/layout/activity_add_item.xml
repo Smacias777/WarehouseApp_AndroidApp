@@ -255,7 +255,7 @@
         app:layout_constraintTop_toBottomOf="@+id/brand_input" />
 
     <Button
-        android:id="@+id/enter_button"
+        android:id="@+id/inventory_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#292626"
@@ -274,9 +274,10 @@
         android:layout_height="wrap_content"
         android:textColor="#FF0000"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/enter_button"
+        app:layout_constraintBottom_toTopOf="@+id/inventory_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/comments_input" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

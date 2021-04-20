@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Project3</string>
     <string name="toast_message_error">Enter all Fields!</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="qr_code">qr_code</string>
 
 </resources>
