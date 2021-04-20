@@ -26,6 +26,9 @@ public class Register extends AppCompatActivity {
     ProgressBar progressBar;
 
     @Override
+		/**
+	* @param savedInstanceState
+	**/
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -47,6 +50,9 @@ public class Register extends AppCompatActivity {
 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
+				/**
+	* @param v
+	**/
             public void onClick(View v) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
@@ -74,6 +80,9 @@ public class Register extends AppCompatActivity {
                 //Register the user in firebase
                 fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
+						/**
+	* @param task
+	**/
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(Register.this, "User Created", Toast.LENGTH_SHORT).show();
@@ -90,6 +99,9 @@ public class Register extends AppCompatActivity {
         // if the user is already registered then this will send them to the login screen
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
+				/**
+	* @param v
+	**/
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Login.class));
             }
