@@ -33,7 +33,6 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
         // connect to xml resources
         mEmail = findViewById(R.id.Email);
         mPassword = findViewById(R.id.Password);
