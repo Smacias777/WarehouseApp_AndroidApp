@@ -61,20 +61,18 @@ public class AddItem extends AppCompatActivity {
             text.setText("Enter all Fields!");
             text.setTypeface(null, Typeface.BOLD);                 // makes text bold
             text.setTextColor(Color.parseColor("#FF0000")); // changes text color to red
-         //   Toast toast = new Toast.makeText(getApplicationContext(), R.string.toast_message_error, Toast.LENGTH_SHORT);
-         //   toast.show();
         }
         else {
             // Write a message to the database
             // Creating a new new 'Item' object (will be placed into database)
             Item newItem = new Item(name, type, brand, condition, quantity, price, color, comments);
 
-            // Adding 'newItem'
+            // Adding 'newItem' - placed into new child(bracket) by it name
             reff.child(name).setValue(newItem);
             Intent intent = new Intent(this, Barcode.class);
 
             // passing the item's name (as a intent extra bundle) so that it can be used to create a qr code
-            String message = name;
+            String message = name + "," + type + "," + brand+ ","+ condition+ ","+ quantity+","+ price +","+ color + "," + comments;
             intent.putExtra(MESSAGE, message);
             startActivity(intent);
         }

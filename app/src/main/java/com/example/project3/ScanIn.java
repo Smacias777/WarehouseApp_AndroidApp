@@ -15,17 +15,33 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.Result;
 
-public class ScanIn extends AppCompatActivity {
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+public class ScanIn extends AppCompatActivity
+{
     private final int CAMERA_REQUEST_CODE = 101;
     private CodeScanner mCodeScanner;
+    private DatabaseReference reff;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_in);
+        reff = FirebaseDatabase.getInstance().getReference().child("Items"); // reference to our database
+
 
         setupPermissions();  // sets permission to use camera
 
@@ -39,8 +55,53 @@ public class ScanIn extends AppCompatActivity {
                 runOnUiThread(new Runnable()
                 {
                     @Override
-                    public void run() {
-                        Toast.makeText(ScanIn.this, result.getText(), Toast.LENGTH_SHORT).show();  // displays toast of what the QR code represents
+                    public void run()
+                    {
+                        // retrieve text from qr code, seperate each word by spliting at every comma (commas where added in the AddItem class)
+                        String [] arr = result.getText().split(",");
+
+                        final String name = arr[0];
+                        String type = arr[1];
+                        String brand = arr[2];
+                        String condition = arr[3];
+                        final String quantity = arr[4];
+                        String price = arr[5];
+                        String color = arr[6];
+                        String comments = arr[7];
+                        Toast.makeText(ScanIn.this, name + " - "+ color , Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
+
+
+                        //adds scanned item into the database
+                        Item newItem = new Item(name, type, brand, condition, quantity, price, color, comments);
+                        final HashMap map = new HashMap();
+
+
+                        // Updates the quantity of the product
+                        reff.child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                Map<String,String> someMap = (Map<String, String>) snapshot.getValue();
+                                String val = someMap.get("quantity");
+
+                                String value = String.valueOf(Integer.valueOf(val) + Integer.valueOf(quantity)); // adds the total inside database and new quantity (value in qr code)
+                                Toast.makeText(ScanIn.this, "Inventory: "+value, Toast.LENGTH_SHORT).show();  // displays toast of what the QR code represents
+
+                                map.put("quantity", value);
+                                reff.child(name).updateChildren(map);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+
+
+                     //   reff.child(name).setValue(newItem);
+
+
                      //   TextView text = findViewById(R.id.camera_text);
                      //   text.setText(result.getText());
                     }
@@ -77,12 +138,11 @@ public class ScanIn extends AppCompatActivity {
         }
     }
 
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
 
     public void gotoInventory(View obj)
     {
