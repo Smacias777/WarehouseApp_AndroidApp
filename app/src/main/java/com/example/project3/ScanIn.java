@@ -60,45 +60,58 @@ public class ScanIn extends AppCompatActivity
                         // retrieve text from qr code, seperate each word by spliting at every comma (commas where added in the AddItem class)
                         String [] arr = result.getText().split(",");
 
-                        final String name = arr[0];
-                        String type = arr[1];
-                        String brand = arr[2];
-                        String condition = arr[3];
-                        final String quantity = arr[4];
-                        String price = arr[5];
-                        String color = arr[6];
-                        String comments = arr[7];
-                        Toast.makeText(ScanIn.this, name + " - "+ color , Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
+                        // will attempt to read barcode as if it was generated from within the app
+                        try {
+                            final String name = arr[0];
+                            String type = arr[1];
+                            String brand = arr[2];
+                            String condition = arr[3];
+                            final String quantity = arr[4];
+                            String price = arr[5];
+                            String color = arr[6];
+                            String comments = arr[7];
+                            Toast.makeText(ScanIn.this, name + " - " + color, Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
 
 
-                        //adds scanned item into the database
-                        Item newItem = new Item(name, type, brand, condition, quantity, price, color, comments);
-                        final HashMap map = new HashMap();
+                            //adds scanned item into the database
+                            Item newItem = new Item(name, type, brand, condition, quantity, price, color, comments);
+                            final HashMap map = new HashMap();
 
 
-                        // Updates the quantity of the product
-                        reff.child(name).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            // Updates the quantity of the product
+                            reff.child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                Map<String,String> someMap = (Map<String, String>) snapshot.getValue();
-                                String val = someMap.get("quantity");
+                                    // tries to retrieve info from database to update quantity (if it cant, it will inform user that the qr code is not in the system)
+                                    try {
+                                        // retriving current quantity from database
+                                        Map<String, String> someMap = (Map<String, String>) snapshot.getValue();
+                                        String val = someMap.get("quantity");
 
-                                String value = String.valueOf(Integer.valueOf(val) + Integer.valueOf(quantity)); // adds the total inside database and new quantity (value in qr code)
-                                Toast.makeText(ScanIn.this, "Inventory: "+value, Toast.LENGTH_SHORT).show();  // displays toast of what the QR code represents
+                                        String value = String.valueOf(Integer.valueOf(val) + Integer.valueOf(quantity)); // adds the total inside database and new quantity (value in qr code)
+                                        Toast.makeText(ScanIn.this, "Inventory: " + value, Toast.LENGTH_SHORT).show();  // displays toast of what the QR code represents
+                                        map.put("quantity", value);
+                                        reff.child(name).updateChildren(map);
 
-                                map.put("quantity", value);
-                                reff.child(name).updateChildren(map);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                                    } catch (Exception e) {
+                                        Toast.makeText(ScanIn.this, "QR code not found!", Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
+                                    }
 
-                            }
-                        });
+                                }
 
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-
-
+                                }
+                            });
+                        }
+                        // if its unable to read barcode it will inform the user that the QR code is not in the database
+                        catch(Exception ee)
+                        {
+                            Toast.makeText(ScanIn.this, "QR code not found!", Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
+                            return;
+                        }
                      //   reff.child(name).setValue(newItem);
 
 
