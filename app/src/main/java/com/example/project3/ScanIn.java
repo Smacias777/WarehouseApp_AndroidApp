@@ -65,21 +65,21 @@ public class ScanIn extends AppCompatActivity
                             final String name = arr[0];
                             String type = arr[1];
                             String brand = arr[2];
-                            String condition = arr[3];
+                            final String condition = arr[3];
                             final String quantity = arr[4];
                             String price = arr[5];
-                            String color = arr[6];
+                            final String color = arr[6];
                             String comments = arr[7];
-                            Toast.makeText(ScanIn.this, name + " - " + color, Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
+                            Toast.makeText(ScanIn.this, name.toLowerCase() + " - " + color.toLowerCase(), Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
 
 
                             //adds scanned item into the database
                             Item newItem = new Item(name, type, brand, condition, quantity, price, color, comments);
                             final HashMap map = new HashMap();
 
-
                             // Updates the quantity of the product
-                            reff.child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+                            // will traverse through the database until it reaches the right section (name>>color>>condition)
+                            reff.child(name.toLowerCase()).child(color.toLowerCase()).child(condition.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -92,7 +92,8 @@ public class ScanIn extends AppCompatActivity
                                         String value = String.valueOf(Integer.valueOf(val) + Integer.valueOf(quantity)); // adds the total inside database and new quantity (value in qr code)
                                         Toast.makeText(ScanIn.this, "Inventory: " + value, Toast.LENGTH_SHORT).show();  // displays toast of what the QR code represents
                                         map.put("quantity", value);
-                                        reff.child(name).updateChildren(map);
+                                        // updating quantity in the correct location
+                                        reff.child(name.toLowerCase()).child(color.toLowerCase()).child(condition.toLowerCase()).updateChildren(map);
 
                                     } catch (Exception e) {
                                         Toast.makeText(ScanIn.this, "QR code not found!", Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct

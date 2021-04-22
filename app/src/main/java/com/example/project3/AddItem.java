@@ -68,7 +68,8 @@ public class AddItem extends AppCompatActivity {
             Item newItem = new Item(name, type, brand, condition, quantity, price, color, comments);
 
             // Adding 'newItem' - placed into new child(bracket) by it name
-            reff.child(name).setValue(newItem);
+            // The values are using toLowerCase(), this will help organize them in the database
+            reff.child(name.toLowerCase()).child(color.toLowerCase()).child(condition.toLowerCase()).setValue(newItem);
             Intent intent = new Intent(this, Barcode.class);
 
             // passing the item's name (as a intent extra bundle) so that it can be used to create a qr code
