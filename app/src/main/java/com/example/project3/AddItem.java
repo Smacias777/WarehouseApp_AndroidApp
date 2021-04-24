@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 
 public class AddItem extends AppCompatActivity {
 
@@ -71,6 +73,10 @@ public class AddItem extends AppCompatActivity {
             // The values are using toLowerCase(), this will help organize them in the database
             reff.child(name.toLowerCase()).child(color.toLowerCase()).child(condition.toLowerCase()).setValue(newItem);
             Intent intent = new Intent(this, Barcode.class);
+
+            //Adding 'key' (item name) to the key class obj
+            Keys key = new Keys();
+            key.add(name.toLowerCase());
 
             // passing the item's name (as a intent extra bundle) so that it can be used to create a qr code
             String message = name + "," + type + "," + brand+ ","+ condition+ ","+ quantity+","+ price +","+ color + "," + comments;
