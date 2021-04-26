@@ -32,7 +32,7 @@
         app:frameCornersSize="75dp"
         app:frameSize="0.8"
         app:frameThickness="5dp"
-        app:maskColor="#A6CA3607"></com.budiyev.android.codescanner.CodeScannerView>
+        app:maskColor="#A6CA3607" />
 
     <Button
         android:id="@+id/inventory_button"
@@ -46,7 +46,6 @@
         android:layout_marginEnd="11dp"
         android:layout_marginBottom="13dp"
         android:backgroundTint="#292626"
-        android:onClick="goToInventory2"
         android:text="inventory"
         android:textColor="#FF5722"
         android:textSize="24sp"
@@ -55,14 +54,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/someText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="41dp"
-        android:layout_marginBottom="169dp"
-        android:textColor="#FFFFFF" />
 
 </RelativeLayout>

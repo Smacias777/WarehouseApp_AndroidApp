@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
@@ -18,10 +20,12 @@ import com.google.zxing.Result;
 
 public class ScanOut extends AppCompatActivity {
 
-
+    private TextView someText;
     private final int CAMERA_REQUEST_CODE = 101;
     private CodeScanner mCodeScanner;
     private View obj;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -84,10 +88,10 @@ public class ScanOut extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+
     public void goToInventory2(View obj)
     {
-        Intent intent = new Intent(this, Inventory2.class);
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), Inventory2.class));
     }
 
 }

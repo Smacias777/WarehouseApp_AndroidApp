@@ -43,7 +43,6 @@ public class Inventory extends AppCompatActivity {
         theList = findViewById(R.id.theList);
         reff = FirebaseDatabase.getInstance().getReference().child("Items"); // reference to our database
 
-
         //the following retrieves "Items" children, which are the names of the items
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
