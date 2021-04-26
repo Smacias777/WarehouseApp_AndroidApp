@@ -16,40 +16,99 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.Result;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ScanOut extends AppCompatActivity {
 
-    private TextView someText;
     private final int CAMERA_REQUEST_CODE = 101;
     private CodeScanner mCodeScanner;
-    private View obj;
-
-
+    private DatabaseReference reff; // will reference database bracket that contains removed items
+    private DatabaseReference ref; // will reference database bracket that contains added items
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan_in);
-
+        setContentView(R.layout.activity_scan_out);
         setupPermissions();  // sets permission to use camera
+
+        reff = FirebaseDatabase.getInstance().getReference().child("Removed"); // reference to our database
+        ref = FirebaseDatabase.getInstance().getReference().child("Items"); // reference to our database
 
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
         mCodeScanner.setDecodeCallback(new DecodeCallback()
         {
             @Override
-            public void onDecoded(@NonNull final Result result)  // results contains the 'word' that the qr code represents
+            public void onDecoded(@NonNull final Result result)  // "result" contains the string that the qr code represents
             {
                 runOnUiThread(new Runnable()
                 {
                     @Override
+                    // this method decides what happens after the qr code is scanned
                     public void run() {
-                        Toast.makeText(ScanOut.this, result.getText(), Toast.LENGTH_SHORT).show();  // displays toast of what the QR code represents
-                        //   TextView text = findViewById(R.id.camera_text);
-                        //   text.setText(result.getText());
-                    }
+                        // retrieve text from qr code, seperate each word by spliting at every comma (commas where added in the AddItem class)
+                        String [] arr = result.getText().split(",");
+
+                        // will attempt to read barcode as if it was generated from within the app
+                        try {
+                            final String name = arr[0];
+                            final String type = arr[1];
+                            final String brand = arr[2];
+                            final String condition = arr[3];
+                            final String quantity = arr[4];
+                            final String price = arr[5];
+                            final String color = arr[6];
+                            final String comments = arr[7];
+                            Toast.makeText(ScanOut.this, name.toLowerCase() + " - " + color.toLowerCase(), Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
+
+                            final Item newItem = new Item(name,type,brand, condition, quantity, price,color ,comments);
+
+                            // Will get a "snapshot" of all the items in the database, we wish to only delete the item only if
+                            // it is found, if not a toast will mention that is was not found.
+                            DatabaseReference re = FirebaseDatabase.getInstance().getReference().child("Items");
+                            ValueEventListener eventLister = new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot2) {
+                                    // will traverse through each of children (which are the names of each item)
+                                    for(DataSnapshot ds3 : snapshot2.getChildren())
+                                    {
+                                        String test = ds3.getKey();
+                                        // if scanned item is found in the database (will remove it from 'items' section & will add it to the 'removed' section
+                                        if(test.toLowerCase().equals(name.toLowerCase()))
+                                        {
+                                            // will remove the specific item from the "items" section
+                                            ref.child(name.toLowerCase()).child(color.toLowerCase()).child(condition.toLowerCase()).removeValue();
+                                            // first will add the item into a new section for all removed items
+                                            reff.child(name.toLowerCase()).child(color.toLowerCase()).child(condition.toLowerCase()).setValue(newItem);
+                                            Toast.makeText(ScanOut.this, "Item Removed!", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else
+                                        {
+                                            Toast.makeText(ScanOut.this, "Item Not Found!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                }
+                            };
+                            re.addListenerForSingleValueEvent(eventLister); // will allow for the event to occur
+
+                        }catch(Exception e)
+                        {
+                            Toast.makeText(ScanOut.this, "QR code not found!", Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
+                        }
+
+                        }
                 });
             }
         });
@@ -61,6 +120,8 @@ public class ScanOut extends AppCompatActivity {
                 mCodeScanner.startPreview();
             }
         });
+
+
     }
     @Override
     protected void onResume() {
@@ -89,7 +150,7 @@ public class ScanOut extends AppCompatActivity {
     }
 
 
-    public void goToInventory2(View obj)
+    public void test(View obj)
     {
         startActivity(new Intent(getApplicationContext(), Inventory2.class));
     }

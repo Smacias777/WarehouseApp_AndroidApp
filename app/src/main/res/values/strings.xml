@@ -3,5 +3,7 @@
     <string name="toast_message_error">Enter all Fields!</string>
     <string name="main_menu">Main Menu</string>
     <string name="qr_code">qr_code</string>
+    <string name="inventory">inventory</string>
+    <string name="inventory2">inventory</string>
 
 </resources>
