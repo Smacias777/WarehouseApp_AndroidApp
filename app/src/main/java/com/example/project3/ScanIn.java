@@ -113,11 +113,11 @@ public class ScanIn extends AppCompatActivity
                             Toast.makeText(ScanIn.this, "QR code not found!", Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
                             return;
                         }
-                     //   reff.child(name).setValue(newItem);
+                        //   reff.child(name).setValue(newItem);
 
 
-                     //   TextView text = findViewById(R.id.camera_text);
-                     //   text.setText(result.getText());
+                        //   TextView text = findViewById(R.id.camera_text);
+                        //   text.setText(result.getText());
                     }
                 });
             }

@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="72dp"
         android:backgroundTint="#000000"
-        android:text="Save Image"
+        android:text="@string/save_image"
         android:textColor="#FF5722"
         android:textSize="18sp"
         android:textStyle="bold"

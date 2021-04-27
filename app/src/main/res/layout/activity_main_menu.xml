@@ -12,13 +12,15 @@
         android:layout_height="54dp"
         android:layout_marginTop="52dp"
         android:backgroundTint="#292626"
+        android:onClick="priceQuantity"
         android:text="Price/Quantity"
         android:textColor="#FF5722"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_scan_out" />
+        app:layout_constraintTop_toBottomOf="@+id/button_scan_out"
+        tools:ignore="OnClick" />
 
     <Button
         android:id="@+id/button_add_item"
