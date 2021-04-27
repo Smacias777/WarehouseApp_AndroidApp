@@ -8,10 +8,14 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * Is the 'Main Menu' of the application where all the potential options and or features to use are shown to the user
+ */
 public class MainMenu extends AppCompatActivity {
 
     @Override
 	/**
+     * Creates the activity's layout
 	* @param savedInstanceState
 	**/
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,9 +23,9 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
     }
 
-    // action for when "Add new Item" is selected
-		/**
-	* @param obj
+    /**
+     * Calls the AddItem class
+	* @param obj is the button that was clicked
 	**/
     public void addItem(View obj)
     {
@@ -29,7 +33,8 @@ public class MainMenu extends AppCompatActivity {
         startActivity(intent);
     }
 	/**
-	* @param obj
+     * Calls the Scan In class
+	* @param obj is the button that was clicked
 	**/
     public void scanIn(View obj)
     {
@@ -38,8 +43,8 @@ public class MainMenu extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param obj
+     * Calls the Scan Out class
+     * @param obj is the button that was clicked
      */
     public void scanOut(View obj)
     {
@@ -48,7 +53,8 @@ public class MainMenu extends AppCompatActivity {
     }
 
     /**
-	* @param view
+     * Calls the Login class
+	* @param view is the button that was clicked
 	**/
     public void logout(View view)
     {

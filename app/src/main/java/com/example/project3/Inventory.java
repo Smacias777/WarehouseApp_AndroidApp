@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Displays all the items that are in the Database
+ */
 public class Inventory extends AppCompatActivity {
 
     private static int val = 0;
@@ -36,6 +39,9 @@ public class Inventory extends AppCompatActivity {
     private ListView theList;
 
     @Override
+    /**
+     * Scans the entire database in order to output each item to the user
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);

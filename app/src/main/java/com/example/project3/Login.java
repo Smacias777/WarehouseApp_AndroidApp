@@ -20,6 +20,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * This class asks the user to enter credentials in order to access the other features of the app
+ */
 public class Login extends AppCompatActivity {
     EditText mEmail, mPassword;
     Button mLoginBtn;
@@ -28,6 +31,9 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
 
     @Override
+    /**
+     * Will ensure that the data entered is found inside the database
+     */
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -92,6 +98,10 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    /**
+     * Opens the Register activity
+     * @param obj is the button that was clicked
+     */
     public void goToRegister(View obj)
     {
         startActivity(new Intent(this, Register.class));

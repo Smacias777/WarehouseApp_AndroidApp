@@ -19,6 +19,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * Displays all the items that have been removed from the database
+ */
 public class Inventory2 extends AppCompatActivity {
     private static int val = 0;
     private ArrayList<String> list = new ArrayList<>();
@@ -27,6 +30,9 @@ public class Inventory2 extends AppCompatActivity {
     private DatabaseReference reff;
 
     @Override
+    /**
+     * Scans the 'Removed' section of the database to return to the user all the items that have been scanned out
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory2);

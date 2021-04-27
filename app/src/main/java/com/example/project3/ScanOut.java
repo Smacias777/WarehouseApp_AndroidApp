@@ -26,6 +26,9 @@ import com.google.zxing.Result;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Allows users to scan out items, these items are places on a different section of the database
+ */
 public class ScanOut extends AppCompatActivity {
 
     private final int CAMERA_REQUEST_CODE = 101;
@@ -34,6 +37,10 @@ public class ScanOut extends AppCompatActivity {
     private DatabaseReference ref; // will reference database bracket that contains added items
 
     @Override
+    /**
+     * Analyses the scanned QR code to see if it is one that was generated within the app. If not it will
+     * let the user know that it did not recognize it
+     */
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -135,6 +142,9 @@ public class ScanOut extends AppCompatActivity {
         super.onPause();
     }
 
+    /**
+     * Sets up permission to access the camera
+     */
     private void setupPermissions()
     {
         int permission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA);
@@ -143,13 +153,21 @@ public class ScanOut extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA} , CAMERA_REQUEST_CODE );
         }
     }
-
+    /**
+     * Requests permission to access the camera
+     * @param requestCode is the request code
+     * @param permissions is a string that seeks to access the camera
+     * @param grantResults is a request code
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-
+    /**
+     *
+     * @param obj is the button that was clicked
+     */
     public void test(View obj)
     {
         startActivity(new Intent(getApplicationContext(), Inventory2.class));

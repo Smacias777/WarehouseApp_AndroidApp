@@ -32,12 +32,12 @@ import java.io.IOException;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
+/**
+ * Generates a specific QR code for a unique item
+ */
 public class Barcode extends AppCompatActivity {
 
-    // Save Image button
     private Button savingImage;
-    // variables for imageview, edittext,
-    // button, bitmap and qrencoder.
     private ImageView qrCodeIV;
     private EditText dataEdt;
     private Button generateQrBtn;
@@ -46,6 +46,8 @@ public class Barcode extends AppCompatActivity {
 
     @Override
 	/**
+     * Generates a qr code and displays it on the screen.
+     * It then gives the user the option to save it in their gallery
 	* @param savedInstanceState
 	**/
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class Barcode extends AppCompatActivity {
         setContentView(R.layout.activity_barcode);
 
         savingImage = findViewById(R.id.saveImage);
+
+        //request permission to read and write to the gallery
         ActivityCompat.requestPermissions(Barcode.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         ActivityCompat.requestPermissions(Barcode.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
 
@@ -60,7 +64,7 @@ public class Barcode extends AppCompatActivity {
         Intent intent = getIntent();
         String newName = intent.getStringExtra(AddItem.MESSAGE);
 
-        // initializing the ImageView
+        // initializing the ImageView that will be the qr code
         qrCodeIV = findViewById(R.id.idIVQrcode);
 
         // getting the windowmanager service.
@@ -69,13 +73,11 @@ public class Barcode extends AppCompatActivity {
         // initializing a variable for default display.
         Display display = manager.getDefaultDisplay();
 
-        // creating a variable for point which
-        // is to be displayed in QR Code.
+        // initiallizing point object.
         Point point = new Point();
         display.getSize(point);
 
-        // getting width and
-        // height of a point
+        // getting width and height
         int width = point.x;
         int height = point.y;
 
@@ -89,13 +91,10 @@ public class Barcode extends AppCompatActivity {
         try {
             // getting our qrcode in the form of bitmap.
             bitmap = qrgEncoder.encodeAsBitmap();
-            // the bitmap is set inside our image
-            // view using .setimagebitmap method.
+            // the bitmap is set up in a way that the it can be seen as an actual image
             qrCodeIV.setImageBitmap(bitmap);
 
         } catch (WriterException e)  {
-            // this method is called for
-            // exception handling.
             Log.e("Tag", e.toString());
         }
 
@@ -108,11 +107,11 @@ public class Barcode extends AppCompatActivity {
                 Bitmap newBitmap = draw.getBitmap();
                 FileOutputStream outStream = null;
                 File file = Environment.getExternalStorageDirectory();
-                File dir = new File(file.getAbsolutePath() + "/Pictures");
-                dir.mkdirs();
+                File a = new File(file.getAbsolutePath() + "/Pictures");
+                a.mkdirs();
 
                 String fileName = String.format("%d.jpg", System.currentTimeMillis());
-                File outFile = new File(dir, fileName);
+                File outFile = new File(a, fileName);
                 try {
                     outStream = new FileOutputStream(outFile);
                     newBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
@@ -130,6 +129,10 @@ public class Barcode extends AppCompatActivity {
         });
     }
 
+    /**
+     * Returns user to the main menu
+     * @param obj is the button that was clicked
+     */
     public void clickMainMenu(View obj)
     {
         Intent intent = new Intent(this, MainMenu.class);

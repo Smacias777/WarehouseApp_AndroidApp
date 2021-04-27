@@ -27,7 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Allows user to scan in items, to be added to the database, by any generated QR code
+ */
 public class ScanIn extends AppCompatActivity
 {
     private final int CAMERA_REQUEST_CODE = 101;
@@ -36,12 +38,15 @@ public class ScanIn extends AppCompatActivity
 
 
     @Override
+    /**
+     * Analyses the scanned QR code to see if it is one that was generated within the app. If not it will
+     * let the user know that it did not recognize it
+     */
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_in);
         reff = FirebaseDatabase.getInstance().getReference().child("Items"); // reference to our database
-
 
         setupPermissions();  // sets permission to use camera
 
@@ -111,11 +116,6 @@ public class ScanIn extends AppCompatActivity
                             Toast.makeText(ScanIn.this, "QR code not found!", Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
                             return;
                         }
-                     //   reff.child(name).setValue(newItem);
-
-
-                     //   TextView text = findViewById(R.id.camera_text);
-                     //   text.setText(result.getText());
                     }
                 });
             }
@@ -141,6 +141,9 @@ public class ScanIn extends AppCompatActivity
         super.onPause();
     }
 
+    /**
+     * Sets up permission to access the camera
+     */
     private void setupPermissions()
     {
         int permission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA);
@@ -151,11 +154,21 @@ public class ScanIn extends AppCompatActivity
     }
 
     @Override
+    /**
+     * Requests permission to access the camera
+     * @param requestCode is the request code
+     * @param permissions is a string that seeks to access the camera
+     * @param grantResults is a request code
+     */
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    /**
+     * Calls the Inventory class
+     * @param obj is the button that was clicked
+     */
     public void gotoInventory(View obj)
     {
         Intent intent = new Intent(this, Inventory.class);
