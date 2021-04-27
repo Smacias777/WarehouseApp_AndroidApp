@@ -47,7 +47,7 @@
         android:layout_marginBottom="13dp"
         android:backgroundTint="#292626"
         android:onClick="test"
-        android:text="@string/inventory2"
+        android:text="Removed Items"
         android:textColor="#FF5722"
         android:textSize="24sp"
         android:textStyle="bold"
