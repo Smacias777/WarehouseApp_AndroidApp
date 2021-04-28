@@ -16,9 +16,12 @@ public class Item {
     private String comments;
 	
 	/**
-	*   A simple contructor for the item class
+	* param name, type, brand, condition, quantity, price, color, comments 
 	*
 	**/
+
+	public Item(){}
+
     public Item(String name, String type, String brand, String condition, String quantity, String price, String color, String comments) {
         this.name = name;
         this.type = type;

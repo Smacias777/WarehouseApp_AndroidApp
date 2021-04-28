@@ -56,11 +56,20 @@ public class MainMenu extends AppCompatActivity {
      * Calls the Login class
 	* @param view is the button that was clicked
 	**/
-    public void logout(View view)
-    {
+    public void logout(View view){
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getApplicationContext(), Login.class));
         finish();
+    }
+
+    /**
+     * Calls the PriceQuantity class
+     * @param obj is the button that was clicked
+     */
+
+    public void priceQuantity(View obj){
+        Intent intent = new Intent(this, PriceQuantity.class);
+        startActivity(intent);
     }
 }
 

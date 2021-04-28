@@ -4,8 +4,10 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -20,9 +22,10 @@
         <activity
             android:name=".Inventory"
             android:parentActivityName=".ScanIn" />
+
         <activity
             android:name=".ScanIn"
-            android:parentActivityName=".MainMenu" />
+            android:parentActivityName=".MainMenu"/>
         <activity
             android:name=".ScanOut"
             android:parentActivityName=".MainMenu" />
@@ -38,6 +41,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".Search"></activity>
+        <activity android:name=".PriceQuantity"></activity>
     </application>
 
 </manifest>

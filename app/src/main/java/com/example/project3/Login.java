@@ -2,9 +2,7 @@ package com.example.project3;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -34,8 +32,7 @@ public class Login extends AppCompatActivity {
     /**
      * Will ensure that the data entered is found inside the database
      */
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -49,21 +46,30 @@ public class Login extends AppCompatActivity {
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
+			/**
+			* @param v
+			**/
             public void onClick(View v) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
-
+			/**
+			* @return
+			**/
                 // Event Handling in the case that their is nothing in text fields
                 if(TextUtils.isEmpty(email)){
                     mEmail.setError("Please Enter an Email");
                     return;
                 }
-
+			/**
+			* @return
+			**/
                 if(TextUtils.isEmpty(password)){
                     mPassword.setError("Please Enter a Password");
                     return;
                 }
-
+			/**
+			* @return
+			**/
                 // Event handling for password requirement
                 if(password.length() < 6){
                     mPassword.setError("Password must be at least 6 characters long.");
@@ -76,6 +82,9 @@ public class Login extends AppCompatActivity {
                 // Authenticate the user
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
+					/**
+					* @param task
+					**/
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             Toast.makeText(Login.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
@@ -92,6 +101,9 @@ public class Login extends AppCompatActivity {
         // if the user is not already registered then this will send them to the register screen
         mCreateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
+			/**
+			* @param v
+			**/
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Register.class));
             }

@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
@@ -22,35 +22,35 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.Result;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-/**
- * Allows user to scan in items, to be added to the database, by any generated QR code
- */
-public class ScanIn extends AppCompatActivity
-{
+public class PriceQuantity extends AppCompatActivity {
+
     private final int CAMERA_REQUEST_CODE = 101;
     private CodeScanner mCodeScanner;
     private DatabaseReference reff;
 
+    Button menuButton;
 
     @Override
-    /**
-     * Analyses the scanned QR code to see if it is one that was generated within the app. If not it will
-     * let the user know that it did not recognize it
-     */
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan_in);
-        reff = FirebaseDatabase.getInstance().getReference().child("Items"); // reference to our database
+        setContentView(R.layout.activity_price_qunatity);
 
+        menuButton = findViewById(R.id.menuButton);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Search.class));
+            }
+        });
+
+        reff = FirebaseDatabase.getInstance().getReference().child("Items"); // reference to our database
         setupPermissions();  // sets permission to use camera
 
-        CodeScannerView scannerView = findViewById(R.id.scanner_view);
+        CodeScannerView scannerView = findViewById(R.id.scannerView);
         mCodeScanner = new CodeScanner(this, scannerView);
         mCodeScanner.setDecodeCallback(new DecodeCallback()
         {
@@ -69,39 +69,44 @@ public class ScanIn extends AppCompatActivity
                         // will attempt to read barcode as if it was generated from within the app
                         try {
                             final String name = arr[0];
-                            String type = arr[1];
-                            String brand = arr[2];
+                            final String type = arr[1];
+                            final String brand = arr[2];
                             final String condition = arr[3];
                             final String quantity = arr[4];
-                            String price = arr[5];
+                            final String price = arr[5];
                             final String color = arr[6];
-                            String comments = arr[7];
-                            Toast.makeText(ScanIn.this, name.toLowerCase() + " - " + color.toLowerCase(), Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
+                            final String comments = arr[7];
+                            Toast.makeText(PriceQuantity.this, name.toLowerCase() + " - " + color.toLowerCase(), Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
 
 
-                            final HashMap map = new HashMap();
 
-                            // Updates the quantity of the product
                             // will traverse through the database until it reaches the right section (name>>color>>condition)
                             reff.child(name.toLowerCase()).child(color.toLowerCase()).child(condition.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                                     // tries to retrieve info from database to update quantity (if it cant, it will inform user that the qr code is not in the system)
                                     try {
                                         // retriving current quantity from database
                                         Map<String, String> someMap = (Map<String, String>) snapshot.getValue();
-                                        String val = someMap.get("quantity");
+                                        String brand = someMap.get("brand");
+                                        String color = someMap.get("color");
+                                        String comments = someMap.get("comments");
+                                        String condition = someMap.get("condition");
+                                        String name = someMap.get("name");
+                                        String price = someMap.get("price");
+                                        String quantity = someMap.get("quantity");
+                                        String type = someMap.get("type");
 
-                                        // updating the quantity (add original quantity by the new quantity)
-                                        String value = String.valueOf(Integer.valueOf(val) + Integer.valueOf(quantity)); // adds the total inside database and new quantity (value in qr code)
-                                        Toast.makeText(ScanIn.this, "Inventory: " + value, Toast.LENGTH_SHORT).show();  // displays toast of what the QR code represents
-                                        map.put("quantity", value);
-                                        // updating quantity in the correct location
-                                        reff.child(name.toLowerCase()).child(color.toLowerCase()).child(condition.toLowerCase()).updateChildren(map);
+                                        // creating a string with all the properties of the given qr code
+                                        String message = brand + "," + color + "," + comments + "," + condition + "," + name + "," + price + "," + quantity + "," + type;
+
+                                        /*
+                                        Create intent to the next activity to print all the info above
+                                         */
+
 
                                     } catch (Exception e) {
-                                        Toast.makeText(ScanIn.this, "QR code not found!", Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
+                                        Toast.makeText(PriceQuantity.this, "QR code not found!", Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
                                     }
                                 }
                                 @Override
@@ -113,7 +118,7 @@ public class ScanIn extends AppCompatActivity
                         // if its unable to read barcode it will inform the user that the QR code is not in the database
                         catch(Exception ee)
                         {
-                            Toast.makeText(ScanIn.this, "QR code not found!", Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
+                            Toast.makeText(PriceQuantity.this, "QR code not found!", Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
                             return;
                         }
                     }
@@ -129,6 +134,7 @@ public class ScanIn extends AppCompatActivity
             }
         });
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -165,14 +171,8 @@ public class ScanIn extends AppCompatActivity
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    /**
-     * Calls the Inventory class
-     * @param obj is the button that was clicked
-     */
-    public void gotoInventory(View obj)
-    {
-        Intent intent = new Intent(this, Inventory.class);
-        startActivity(intent);
-    }
+
+
+
 
 }
