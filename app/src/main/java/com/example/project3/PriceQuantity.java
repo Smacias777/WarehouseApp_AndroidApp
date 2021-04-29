@@ -25,6 +25,9 @@ import com.google.zxing.Result;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Allows the user to find specific information of any item
+ */
 public class PriceQuantity extends AppCompatActivity {
 
     public static final String MESSAGE2 = "Something_else"; // key used to pass data using 'intent extras'
@@ -35,6 +38,9 @@ public class PriceQuantity extends AppCompatActivity {
     Button menuButton;
 
     @Override
+    /**
+     * Retrieves the proper information to retrieve the necessary information for a given item
+     */
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -78,8 +84,6 @@ public class PriceQuantity extends AppCompatActivity {
                             final String color = arr[6];
                             final String comments = arr[7];
                             Toast.makeText(PriceQuantity.this, name.toLowerCase() + " - " + color.toLowerCase(), Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
-
-
 
                             // will traverse through the database until it reaches the right section (name>>color>>condition)
                             reff.child(name.toLowerCase()).child(color.toLowerCase()).child(condition.toLowerCase()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -172,6 +176,10 @@ public class PriceQuantity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    /**
+     * Will allow user to go to the SearchResult class, to display the item's details
+     * @param a is a String containing an item's details
+     */
     public void goToResults(String a)
     {
         Intent intent = new Intent(this, SearchResults.class);

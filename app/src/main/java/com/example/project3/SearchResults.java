@@ -22,6 +22,10 @@ public class SearchResults extends AppCompatActivity {
     private TextView type;
 
     @Override
+    /**
+     * This method retrieves the information from the intent extra
+     * and outputs it.
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
@@ -43,8 +47,10 @@ public class SearchResults extends AppCompatActivity {
             Intent intent = getIntent();
             String newName = intent.getStringExtra(PriceQuantity.MESSAGE2);
 
+            // "results" contains an array with specific values of an item
             String[] results = newName.split(",");
 
+            // setting the appropriate values to the corresponding TextView
             brand.setText(brand.getText() + results[0]);
             color.setText(color.getText() + results[1]);
             comments.setText(comments.getText() + results[2]);
