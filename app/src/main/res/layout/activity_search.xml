@@ -6,24 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Search">
 
-    <AutoCompleteTextView
-        android:id="@+id/textSearch"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_margin="20dp"
-        android:padding="10dp"
-        android:background="#000000"
-        android:fontFamily="serif"
-        android:textColor="#FFFFFF"
-        android:drawableStart="@drawable/ic_baseline_search_24"
-        ></AutoCompleteTextView>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textSearch"
         android:layout_margin="20dp"
         ></androidx.recyclerview.widget.RecyclerView>
 

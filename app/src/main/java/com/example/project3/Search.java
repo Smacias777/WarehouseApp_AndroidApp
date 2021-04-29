@@ -56,7 +56,7 @@ public class Search extends AppCompatActivity {
         database = FirebaseDatabase.getInstance().getReference("Items");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        txt = (AutoCompleteTextView)findViewById(R.id.textSearch);
+        //txt = (AutoCompleteTextView)findViewById(R.id.textSearch);
 
         list = new ArrayList<>();
         final ArrayList<String> list1 = new ArrayList<>();
@@ -167,8 +167,6 @@ public class Search extends AppCompatActivity {
                         }
                     };
                     ref.addListenerForSingleValueEvent(eventListener);
-                    ArrayAdapter adapter = new ArrayAdapter(Search.this, android.R.layout.simple_list_item_1, list);
-                    txt.setAdapter(adapter);
                 }
             }
 
