@@ -35,7 +35,7 @@
         android:fontFamily="serif"
         android:text="Warehouse App"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#FF0032"
+        android:textColor="#6F83DC"
         android:textSize="25sp"
         android:textStyle="bold"
         android:typeface="normal"
@@ -92,17 +92,17 @@ app:layout_constraintEnd_toEndOf="parent"
 app:layout_constraintStart_toStartOf="parent"
 app:layout_constraintTop_toBottomOf="@+id/Password" />
 
-<TextView
-android:id="@+id/createText"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_marginTop="16dp"
-android:onClick="goToRegister"
-android:text="New Here? Create Account Here"
-android:textColor="#FF0032"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+    <TextView
+        android:id="@+id/createText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:onClick="goToRegister"
+        android:text="New Here? Create Account Here"
+        android:textColor="#6F83DC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
 
 <ProgressBar

@@ -15,7 +15,10 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-
+/**
+ * This class takes specific properties of an item from the user. Then
+ * it calls the Barcode class.
+ */
 public class AddItem extends AppCompatActivity {
 
     public static final String MESSAGE = "Something"; // key used to pass data using 'intent extras'
@@ -32,6 +35,7 @@ public class AddItem extends AppCompatActivity {
 
     @Override
 	/**
+     * Creates the activity layout
 	* @param savedInstanceState
 	*/
     protected void onCreate(Bundle savedInstanceState)
@@ -71,6 +75,7 @@ public class AddItem extends AppCompatActivity {
             // The values are using toLowerCase(), this will help organize them in the database
             reff.child(name.toLowerCase()).child(color.toLowerCase()).child(condition.toLowerCase()).setValue(newItem);
             Intent intent = new Intent(this, Barcode.class);
+
 
             // passing the item's name (as a intent extra bundle) so that it can be used to create a qr code
             String message = name + "," + type + "," + brand+ ","+ condition+ ","+ quantity+","+ price +","+ color + "," + comments;

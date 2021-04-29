@@ -1,12 +1,18 @@
 package com.example.project3;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import junit.framework.TestCase;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
 
-class ItemTest {
+
+class ItemTest  {
+
     @Test
-    void testToString() {
-        Item newitem = new Item("name", "type", "brand", "condition", "quantity", "price", "color", "comments");
+    public void testToString() {
+        Item item = new Item("a","b","c","d","e","f","g","h");
+        assertEquals("c",item.getCondition());
     }
 }

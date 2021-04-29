@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * Allows any user to create an account
+ */
 public class Register extends AppCompatActivity {
     EditText mFullName, mEmail, mPassword;
     Button mRegisterButton;
@@ -27,6 +30,7 @@ public class Register extends AppCompatActivity {
 
     @Override
 		/**
+         * Ensures that the entered values are valid. Such as the email section contains an actual email
 	* @param savedInstanceState
 	**/
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +54,10 @@ public class Register extends AppCompatActivity {
 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
-				/**
-	* @param v
-	**/
+            /**
+             * Checks that the user's input is valid
+	        * @param v
+	        **/
             public void onClick(View v) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
@@ -80,9 +85,10 @@ public class Register extends AppCompatActivity {
                 //Register the user in firebase
                 fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-						/**
-	* @param task
-	**/
+                    /**
+                     * Lets the user know if the account was created successfully
+	                * @param task
+	                **/
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(Register.this, "User Created", Toast.LENGTH_SHORT).show();
@@ -99,9 +105,10 @@ public class Register extends AppCompatActivity {
         // if the user is already registered then this will send them to the login screen
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-				/**
-	* @param v
-	**/
+            /**
+             * Calls the Login class
+	        * @param v is the button that was clicked
+	        **/
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Login.class));
             }

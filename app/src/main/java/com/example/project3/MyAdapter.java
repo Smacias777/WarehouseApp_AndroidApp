@@ -16,6 +16,9 @@ import com.example.project3.R;
 
 import java.util.ArrayList;
 
+/**
+ * Acts an a "middle man" for the RecyclerView to be used
+ */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     Context context;
@@ -93,7 +96,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
      * Initialize values
      */
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-
         TextView name, brand, quantity, price, color, condition, comments;
 
         public MyViewHolder(@NonNull View itemView) {

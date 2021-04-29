@@ -18,6 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * This class asks the user to enter credentials in order to access the other features of the app
+ */
 public class Login extends AppCompatActivity {
     EditText mEmail, mPassword;
     Button mLoginBtn;
@@ -26,9 +29,9 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
 
     @Override
-	/**
-	* @param savedInstanceState
-	**/
+    /**
+     * Will ensure that the data entered is found inside the database
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -50,7 +53,7 @@ public class Login extends AppCompatActivity {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
 			/**
-			* @return 
+			* @return
 			**/
                 // Event Handling in the case that their is nothing in text fields
                 if(TextUtils.isEmpty(email)){
@@ -58,14 +61,14 @@ public class Login extends AppCompatActivity {
                     return;
                 }
 			/**
-			* @return 
+			* @return
 			**/
                 if(TextUtils.isEmpty(password)){
                     mPassword.setError("Please Enter a Password");
                     return;
                 }
 			/**
-			* @return 
+			* @return
 			**/
                 // Event handling for password requirement
                 if(password.length() < 6){
@@ -106,9 +109,11 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-			/**
-			* @param obj
-			**/
+
+    /**
+     * Opens the Register activity
+     * @param obj is the button that was clicked
+     */
     public void goToRegister(View obj)
     {
         startActivity(new Intent(this, Register.class));

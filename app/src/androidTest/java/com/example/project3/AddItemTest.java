@@ -1,4 +1,7 @@
 package com.example.project3;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,8 +18,8 @@ import android.widget.Toast;
 
 import static org.junit.Assert.assertEquals;
 
-public class AddItemTest extends AppCompatActivity{
-
+public class AddItemTest
+{
     public static final String MESSAGE = "Something"; // key used to pass data using 'intent extras'
     private String name = "";
     private String type = "";
@@ -26,40 +29,30 @@ public class AddItemTest extends AppCompatActivity{
     private String price = "";
     private String color = "";
     private String comments = "";
-    public void clickEnter(View obj) {
-        name = "phone";
-        brand = "idk";
-        quantity = "6";
-        price = "40";
-        color = "red";
-        comments = "new";
-        Intent intent = new Intent(this, Barcode.class);
-            // passing the items name so that it can be used to create a qr code
-        String message = name;
-        intent.putExtra(MESSAGE, message);
-        startActivity(intent);
 
-    }
-
-    public void chooseType(View obj)
+    @Test
+    public void chooseType()
     {
-        Button androidButton = (Button) obj;
-        androidButton.getText().equals("Android");
-        assertEquals("Android", type);
+        String a = "Iphone";
 
-        Button iPhoneButton = (Button) obj;
-        iPhoneButton.getText().equals("iPhone");
-        assertEquals("Iphone", type);
+        if(a.equals("Android")) {
+            assertEquals("Android", a);
+        }
+        else {
+            assertEquals("Iphone", a);
+        }
     }
 
-    public void chooseCondition(View obj) {
-        Button newButton = (Button) obj;
-        newButton.getText().equals("New");
-        assertEquals("New", condition);
-
-        Button usedButton = (Button) obj;
-        usedButton.getText().equals("Used");
-        assertEquals("Used", condition);
+    @Test
+    public void chooseCondition() {
+        String b = "Used";
+        if(b.equals("New")) {
+            assertEquals("New", b);
+        }
+        else {
+            assertEquals("Used", b);
+        }
     }
+
 }
 

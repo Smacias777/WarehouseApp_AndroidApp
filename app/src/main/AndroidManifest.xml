@@ -14,12 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Details"></activity>
+        <activity android:name=".SearchResults"></activity>
+        <activity
+            android:name=".Inventory2"
+            android:parentActivityName=".ScanOut" />
         <activity
             android:name=".Inventory"
             android:parentActivityName=".ScanIn" />
         <activity
             android:name=".ScanIn"
+            android:parentActivityName=".MainMenu" />
+        <activity
+            android:name=".ScanOut"
             android:parentActivityName=".MainMenu" />
         <activity android:name=".Register" />
         <activity android:name=".MainMenu" />
@@ -36,7 +42,9 @@
         </activity>
         <activity android:name=".Search" />
         <activity android:name=".PriceQuantity" />
-        <activity android:name=".ScanOut" />
+        <activity android:name=".Details" />
+
+
     </application>
 
 </manifest>

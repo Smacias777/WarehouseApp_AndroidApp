@@ -31,7 +31,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.EventListener;
 
-
+/**
+ * Gives the user a list of all the values inside the database
+ */
 public class Search extends AppCompatActivity {
 
     private int val=0;

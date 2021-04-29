@@ -8,10 +8,16 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * @author Samir Macias, MArk Perez, Megan Jen
+ * @version 1.0
+ * Is the 'Main Menu' of the application where all the potential options and or features to use are shown to the user
+ */
 public class MainMenu extends AppCompatActivity {
 
     @Override
 	/**
+     * Creates the activity's layout
 	* @param savedInstanceState
 	**/
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,9 +25,9 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
     }
 
-    // action for when "Add new Item" is selected
-		/**
-	* @param obj
+    /**
+     * Calls the AddItem class
+	* @param obj is the button that was clicked
 	**/
     public void addItem(View obj)
     {
@@ -29,15 +35,28 @@ public class MainMenu extends AppCompatActivity {
         startActivity(intent);
     }
 	/**
-	* @param obj
+     * Calls the Scan In class
+	* @param obj is the button that was clicked
 	**/
     public void scanIn(View obj)
     {
         Intent intent  = new Intent(this, ScanIn.class);
         startActivity(intent);
     }
-		/**
-	* @param view
+
+    /**
+     * Calls the Scan Out class
+     * @param obj is the button that was clicked
+     */
+    public void scanOut(View obj)
+    {
+        Intent intent  = new Intent(this, ScanOut.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Calls the Login class
+	* @param view is the button that was clicked
 	**/
     public void logout(View view){
         FirebaseAuth.getInstance().signOut();
@@ -45,10 +64,10 @@ public class MainMenu extends AppCompatActivity {
         finish();
     }
 
-    public void scanOut(View obj){
-        Intent intent = new Intent(this, ScanOut.class);
-        startActivity(intent);
-    }
+    /**
+     * Calls the PriceQuantity class
+     * @param obj is the button that was clicked
+     */
 
     public void priceQuantity(View obj){
         Intent intent = new Intent(this, PriceQuantity.class);
