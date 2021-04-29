@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,16 +38,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Item user = list.get(position);
+        final Item user = list.get(position);
         holder.name.setText(user.getName());
         holder.brand.setText(user.getBrand());
         holder.quantity.setText(user.getQuantity());
+
+        final String a = user.getName() + "," + user.getBrand() + "," + user.getQuantity() + "," + user.getPrice() + "," + user.getColor() + "," + user.getCondition()
+                + "," + user.getComments();
         
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Details.class);
+                intent.putExtra("key", a);
+
                 context.startActivity(intent);
+
             }
         });
 
@@ -59,7 +66,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name, brand, quantity;
+        TextView name, brand, quantity, price, color, condition, comments;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +74,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             name = itemView.findViewById(R.id.itemName);
             brand = itemView.findViewById(R.id.brand);
             quantity = itemView.findViewById(R.id.quantity);
+
 
         }
     }

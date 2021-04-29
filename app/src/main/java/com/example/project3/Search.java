@@ -40,6 +40,8 @@ public class Search extends AppCompatActivity {
     DatabaseReference database;
     MyAdapter myAdapter;
     ArrayList<Item> list;
+    AutoCompleteTextView txt;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class Search extends AppCompatActivity {
         database = FirebaseDatabase.getInstance().getReference("Items");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        txt = (AutoCompleteTextView)findViewById(R.id.textSearch);
 
         list = new ArrayList<>();
         final ArrayList<String> list1 = new ArrayList<>();
@@ -96,6 +99,7 @@ public class Search extends AppCompatActivity {
                                                     for(DataSnapshot dataSnapshot3 : snapshot.getChildren()){
                                                         String item = dataSnapshot3.getValue().toString();
 
+
                                                         list1.add(item);
 
                                                         val++;
@@ -103,13 +107,21 @@ public class Search extends AppCompatActivity {
                                                             String name = list1.get(4);
                                                             String brand = list1.get(0);
                                                             String quant = list1.get(6);
+                                                            String price = list1.get(5);
+                                                            String color = list1.get(1);
+                                                            String condition = list1.get(3);
+                                                            String comments = list1.get(2);
 
 
                                                             Item product = new Item(name, brand, quant);
 
+                                                            Item product2 = new Item(name, brand, condition, quant, price, color, comments);
+
+
                                                             //Toast.makeText(Search.this, ""+ product.getQuantity(), Toast.LENGTH_SHORT).show();
 
-                                                            list.add(product);
+                                                            //list.add(product);
+                                                            list.add(product2);
 
                                                             //Toast.makeText(Search.this, ""+ list.toString(), Toast.LENGTH_SHORT).show();
 
@@ -147,7 +159,8 @@ public class Search extends AppCompatActivity {
                         }
                     };
                     ref.addListenerForSingleValueEvent(eventListener);
-
+                    ArrayAdapter adapter = new ArrayAdapter(Search.this, android.R.layout.simple_list_item_1, list);
+                    txt.setAdapter(adapter);
                 }
             }
 
@@ -159,22 +172,5 @@ public class Search extends AppCompatActivity {
 
     }
 
-/*
-    public void createObject(ArrayList<String> array){
-        ArrayList<String> newArray = new ArrayList<>();
-        String value;
 
-        val++;
-        if(val%8 == 0){
-                String name = array.get(4);
-                String brand = array.get(0);
-                String quant = array.get(6);
-
-                Item item = new Item(name, brand, quant);
-
-                list.add(item);
-
-            array.clear();
-        }
-    }*/
 }

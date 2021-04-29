@@ -1,5 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="scanner_view" type="id">scanner_view</item>
-    <item name="camera_text" type="id">camera_text</item>
 </resources>
