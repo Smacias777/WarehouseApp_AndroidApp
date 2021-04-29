@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.service.autofill.Dataset;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,49 +29,138 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.EventListener;
 
 public class Search extends AppCompatActivity {
 
+    private int val=0;
+
     AutoCompleteTextView textsearch;
-    RecyclerView listData;
-    DatabaseReference ref;
+    RecyclerView recyclerView;
+    DatabaseReference database;
+    MyAdapter myAdapter;
+    ArrayList<Item> list;
+    AutoCompleteTextView txt;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        ref = database.getReference("Items");
+        recyclerView = findViewById(R.id.listData);
+        database = FirebaseDatabase.getInstance().getReference("Items");
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        txt = (AutoCompleteTextView)findViewById(R.id.textSearch);
 
-        listData = (RecyclerView)findViewById(R.id.listData);
-        textsearch = (AutoCompleteTextView)findViewById(R.id.textSearch);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        listData.setLayoutManager(layoutManager);
+        list = new ArrayList<>();
+        final ArrayList<String> list1 = new ArrayList<>();
+        myAdapter = new MyAdapter(Search.this, list);
+        recyclerView.setAdapter(myAdapter);
 
-        populateSearch();
 
-    }
-
-    private void populateSearch() {
-        ValueEventListener eventListener = new ValueEventListener() {
+        database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    ArrayList<String> names = new ArrayList<>();
-                    for(DataSnapshot dataSnapshot :snapshot.getChildren()){
-                        String n = dataSnapshot.child("name").getValue(String.class);
-                        names.add(n);
-                    }
-                    ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_2, names);
-                    textsearch.setAdapter(adapter);
-                    textsearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                for (final DataSnapshot dataSnapshot : snapshot.getChildren()){
+
+                    final String user = dataSnapshot.getKey();
+                    //list.add(user);
+
+                    //Toast.makeText(Search.this, "Failed" + dataSnapshot.getKey(),Toast.LENGTH_SHORT).show();
+
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Items").child(user);
+                    ValueEventListener eventListener = new ValueEventListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            String selection = parent.getItemAtPosition(position).toString();
-                            getName(selection);
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for(final DataSnapshot dataSnapshot1 : snapshot.getChildren()){
+                                final String user1 = dataSnapshot1.getKey();
+
+                                //Toast.makeText(Search.this, "Failed" + dataSnapshot1.getKey(),Toast.LENGTH_SHORT).show();
+
+
+                                DatabaseReference re = FirebaseDatabase.getInstance().getReference().child("Items").child(user).child(user1);
+                                ValueEventListener eventListener1 = new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for(DataSnapshot dataSnapshot2 : snapshot.getChildren()){
+                                            String user2 = dataSnapshot2.getKey();
+
+                                            //Toast.makeText(Search.this, "Failed" + dataSnapshot2.getKey(),Toast.LENGTH_SHORT).show();
+
+                                            DatabaseReference r = FirebaseDatabase.getInstance().getReference().child("Items").child(user).child(user1)
+                                                    .child(user2);
+
+                                            ValueEventListener eventListener2 = new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    for(DataSnapshot dataSnapshot3 : snapshot.getChildren()){
+                                                        String item = dataSnapshot3.getValue().toString();
+
+
+                                                        list1.add(item);
+
+                                                        val++;
+                                                        if(val%8 == 0) {
+                                                            String name = list1.get(4);
+                                                            String brand = list1.get(0);
+                                                            String quant = list1.get(6);
+                                                            String price = list1.get(5);
+                                                            String color = list1.get(1);
+                                                            String condition = list1.get(3);
+                                                            String comments = list1.get(2);
+
+
+                                                            Item product = new Item(name, brand, quant);
+
+                                                            Item product2 = new Item(name, brand, condition, quant, price, color, comments);
+
+
+                                                            //Toast.makeText(Search.this, ""+ product.getQuantity(), Toast.LENGTH_SHORT).show();
+
+                                                            //list.add(product);
+                                                            list.add(product2);
+
+                                                            //Toast.makeText(Search.this, ""+ list.toString(), Toast.LENGTH_SHORT).show();
+
+                                                            list1.clear();
+                                                        }
+
+
+
+                                                        //Toast.makeText(Search.this, dataSnapshot3.getValue().toString(),Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    myAdapter.notifyDataSetChanged();
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            };
+                                            r.addListenerForSingleValueEvent(eventListener2);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                };
+                                re.addListenerForSingleValueEvent(eventListener1);
+                            }
                         }
-                    });
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    };
+                    ref.addListenerForSingleValueEvent(eventListener);
+                    ArrayAdapter adapter = new ArrayAdapter(Search.this, android.R.layout.simple_list_item_1, list);
+                    txt.setAdapter(adapter);
                 }
             }
 
@@ -77,98 +168,9 @@ public class Search extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        };
-        ref.addListenerForSingleValueEvent(eventListener);
-    }
-
-
-    private void getName(String selection) {
-
-        Query  query = ref.orderByChild("name").equalTo(selection);
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-
-                    ArrayList<Item> list = new ArrayList<>();
-                    for(DataSnapshot ds:snapshot.getChildren()){
-                        Item nameInfo = new Item(ds.child("name").getValue(String.class), ds.child("type").getValue(String.class), ds.child("brand").getValue(String.class),
-                                ds.child("condition").getValue(String.class), ds.child("quantity").getValue(String.class), ds.child("price").getValue(String.class),
-                                ds.child("color").getValue(String.class), ds.child("comments").getValue(String.class));
-                        list.add(nameInfo);
-                    }
-                    MyAdapter adapter = new MyAdapter(list, Search.this);
-                    listData.setAdapter(adapter);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        query.addListenerForSingleValueEvent(eventListener);
+        });
 
     }
 
 
-
-
-    public static class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
-
-        private ArrayList<Item> list;
-        private Context mContext;
-
-        public MyAdapter(ArrayList<Item> list, Context mContext) {
-            this.list = list;
-            this.mContext = mContext;
-        }
-
-        @NonNull
-        @Override
-        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.item, parent, false);
-            return new MyViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            Item item = list.get(position);
-            holder.name.setText(item.getName());
-            holder.brand.setText(item.getBrand());
-            holder.quantity.setText(item.getQuantity());
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return list.size();
-        }
-
-        public static class MyViewHolder extends RecyclerView.ViewHolder {
-            TextView name;
-            TextView type;
-            TextView brand;
-            TextView condition;
-            TextView quantity;
-            TextView price;
-            TextView color;
-            TextView comments;
-
-            public MyViewHolder(View view){
-                super(view);
-
-                name = itemView.findViewById(R.id.itemName);
-                brand = itemView.findViewById(R.id.brand);
-                quantity = itemView.findViewById(R.id.quantity);
-            }
-        }
-    }
 }

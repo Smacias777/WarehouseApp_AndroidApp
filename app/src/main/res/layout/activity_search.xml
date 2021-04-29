@@ -15,7 +15,7 @@
         android:background="#000000"
         android:fontFamily="serif"
         android:textColor="#FFFFFF"
-        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:drawableStart="@drawable/ic_baseline_search_24"
         ></AutoCompleteTextView>
 
 

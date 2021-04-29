@@ -27,6 +27,7 @@
         <activity
             android:name=".ScanOut"
             android:parentActivityName=".MainMenu" />
+            android:parentActivityName=".MainMenu" />
         <activity android:name=".Register" />
         <activity android:name=".MainMenu" />
         <activity android:name=".Barcode" />
@@ -42,6 +43,7 @@
         </activity>
         <activity android:name=".Search" />
         <activity android:name=".PriceQuantity" />
+
     </application>
 
 </manifest>
