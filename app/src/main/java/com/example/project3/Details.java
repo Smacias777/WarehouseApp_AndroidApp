@@ -2,23 +2,12 @@ package com.example.project3;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.service.autofill.Dataset;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -29,33 +18,34 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 
-public class Search extends AppCompatActivity {
-
+public class Details extends AppCompatActivity {
+    Button button;
+    EditText txtName, txtBrand, txtQuant, txtPrice, txtColor, txtCondition, txtComments;
+    DatabaseReference database;
+    ArrayList<Item> list;
     private int val=0;
 
-    AutoCompleteTextView textsearch;
-    RecyclerView recyclerView;
-    DatabaseReference database;
-    MyAdapter myAdapter;
-    ArrayList<Item> list;
-
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_details);
 
-        recyclerView = findViewById(R.id.listData);
-        database = FirebaseDatabase.getInstance().getReference("Items");
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        button.findViewById(R.id.menuButton);
+        txtName = findViewById(R.id.itemTxt);
+        txtBrand = findViewById(R.id.brand_input);
+        txtQuant = findViewById(R.id.quantity_input);
+        txtPrice = findViewById(R.id.price_input);
+        txtColor = findViewById(R.id.color_input);
+        txtCondition = findViewById(R.id.condition);
+        txtComments = findViewById(R.id.comments);
+
+        Intent intent = getIntent();
+        String key = intent.getStringExtra("key");
 
         list = new ArrayList<>();
         final ArrayList<String> list1 = new ArrayList<>();
-        myAdapter = new MyAdapter(Search.this, list);
-        recyclerView.setAdapter(myAdapter);
-
+        database = FirebaseDatabase.getInstance().getReference("Items");
 
         database.addValueEventListener(new ValueEventListener() {
             @Override
@@ -94,8 +84,15 @@ public class Search extends AppCompatActivity {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                     for(DataSnapshot dataSnapshot3 : snapshot.getChildren()){
-                                                        String item = dataSnapshot3.getValue().toString();
+                                                        txtName.setText(dataSnapshot3.child("name").getValue().toString());
+                                                        txtBrand.setText(dataSnapshot3.child("brand").getValue().toString());
+                                                        txtQuant.setText(dataSnapshot3.child("quantity").getValue().toString());
+                                                        txtPrice.setText(dataSnapshot3.child("price").getValue().toString());
+                                                        txtColor.setText(dataSnapshot3.child("color").getValue().toString());
+                                                        txtCondition.setText(dataSnapshot3.child("condition").getValue().toString());
+                                                        txtComments.setText(dataSnapshot3.child("comments").getValue().toString());
 
+                                                        /*
                                                         list1.add(item);
 
                                                         val++;
@@ -111,16 +108,16 @@ public class Search extends AppCompatActivity {
 
                                                             list.add(product);
 
-                                                            //Toast.makeText(Search.this, ""+ list.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Search.this, ""+ list.toString(), Toast.LENGTH_SHORT).show();
 
                                                             list1.clear();
                                                         }
-
+                                                        */
 
 
                                                         //Toast.makeText(Search.this, dataSnapshot3.getValue().toString(),Toast.LENGTH_SHORT).show();
                                                     }
-                                                    myAdapter.notifyDataSetChanged();
+                                                    //myAdapter.notifyDataSetChanged();
                                                 }
 
                                                 @Override
@@ -156,25 +153,5 @@ public class Search extends AppCompatActivity {
 
             }
         });
-
     }
-
-/*
-    public void createObject(ArrayList<String> array){
-        ArrayList<String> newArray = new ArrayList<>();
-        String value;
-
-        val++;
-        if(val%8 == 0){
-                String name = array.get(4);
-                String brand = array.get(0);
-                String quant = array.get(6);
-
-                Item item = new Item(name, brand, quant);
-
-                list.add(item);
-
-            array.clear();
-        }
-    }*/
 }

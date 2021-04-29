@@ -22,6 +22,12 @@ public class Item {
 
 	public Item(){}
 
+	public Item(String name, String brand, String quantity){
+	    this.name = name;
+	    this.brand = brand;
+	    this.quantity = quantity;
+    }
+
     public Item(String name, String type, String brand, String condition, String quantity, String price, String color, String comments) {
         this.name = name;
         this.type = type;

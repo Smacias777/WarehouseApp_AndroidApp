@@ -51,7 +51,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void priceQuantity(View obj){
-        Intent intent = new Intent(this, Search.class);
+        Intent intent = new Intent(this, PriceQuantity.class);
         startActivity(intent);
     }
 }
