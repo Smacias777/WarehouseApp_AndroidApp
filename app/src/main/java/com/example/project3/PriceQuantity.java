@@ -27,6 +27,7 @@ import java.util.Map;
 
 public class PriceQuantity extends AppCompatActivity {
 
+    public static final String MESSAGE2 = "Something_else"; // key used to pass data using 'intent extras'
     private final int CAMERA_REQUEST_CODE = 101;
     private CodeScanner mCodeScanner;
     private DatabaseReference reff;
@@ -100,9 +101,7 @@ public class PriceQuantity extends AppCompatActivity {
                                         // creating a string with all the properties of the given qr code
                                         String message = brand + "," + color + "," + comments + "," + condition + "," + name + "," + price + "," + quantity + "," + type;
 
-                                        /*
-                                        Create intent to the next activity to print all the info above
-                                         */
+                                        goToResults(message);
 
 
                                     } catch (Exception e) {
@@ -133,6 +132,8 @@ public class PriceQuantity extends AppCompatActivity {
                 mCodeScanner.startPreview();
             }
         });
+
+
     }
 
     @Override
@@ -171,7 +172,12 @@ public class PriceQuantity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-
+    public void goToResults(String a)
+    {
+        Intent intent = new Intent(this, SearchResults.class);
+        intent.putExtra(MESSAGE2, a);
+        startActivity(intent);
+    }
 
 
 

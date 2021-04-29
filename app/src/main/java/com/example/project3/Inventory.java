@@ -121,8 +121,6 @@ public class Inventory extends AppCompatActivity {
         reff.addListenerForSingleValueEvent(eventListener);
     }
 
-
-
     /**
      * Every single value from the database is passed through this method.
      * After every 8 elements, it combines them together as a single string.
@@ -159,87 +157,4 @@ public class Inventory extends AppCompatActivity {
         theList.setAdapter(arry);
     }
 
-
-
 }
-/*
-
-  ArrayList<String> newArray = new ArrayList<>();
-        ArrayList<String> newlyFormatedValues = new ArrayList<>();
-
-        // the outer loop, loops the number of items found in the database (8 properties for each)
-        for(int i = 0; i < arr.size()/8; i++)
-        {
-            String val = ""; // this variable will contain a large string of all the properties of a single item
-            newArray.clear();
-            // will loops through all eight of every item's properties
-            for(int j = 0; j < 8; j++) {
-                // retrieve the every 8 elements (every 8 elements are the property of a single item)
-                newArray.add(list.get(j));
-                list.remove(i); // will remove it so that we the other elements can be retrieved without changing the index
-            }
-            // this for loop combines the properies into a single string to be placed into the ListView
-            // "val" - contains this new string value
-            for(int k = 0; k < newArray.size(); k++)
-            {
-                val = val + " " +newArray.get(i);
-            }
-            newlyFormatedValues.add(val);
-        }
-
-----------------------------------------------------------------------------
-   reff.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-
-                    String name = (String) childDataSnapshot.child("iphone 8").getValue();
-                    //Do the same for other properties.
-                    Toast.makeText(Inventory.this,"|"+ name+"|", Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
----------------------------------------------------------------------------------
-
-reff.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                Map<String, String> someMap = (Map<String, String>) snapshot.getValue();
-
-
-         //       Toast.makeText(Inventory.this, "name", Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
-             //  String val = someMap.get(key.get(0));
-
-                /*
-                for(DataSnapshot val : snapshot.getChildren())
-                {
-                    Item item = val.getValue(Item.class);
-                    list.add(item);
-                    Toast.makeText(Inventory.this, list.get(0).getName(), Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
-
-                }
-                Collection<String> collection = someMap.values();
-                Object [] group = collection.toArray(); // retrieves the names of the phones in the database
-
-
-                for(int i = 0; i < group.length; i++)
-                {
-                    Toast.makeText(Inventory.this, group[i].toString(), Toast.LENGTH_SHORT).show();  // displays toast, displaying name, helping user know that the item scanned it correct
-
-
-                }
-
-            }
-@Override
-public void onCancelled(@NonNull DatabaseError error) {
-
-        }
-        });
-
-*/
