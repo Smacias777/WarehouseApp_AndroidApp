@@ -41,9 +41,10 @@ public class Search extends AppCompatActivity {
     DatabaseReference database;
     MyAdapter myAdapter;
     ArrayList<Item> list;
-    AutoCompleteTextView txt;
 
     /**
+     * Initialize values, and add eventListeners for the activity's functionality
+     *
      * @param savedInstanceState
      */
     @Override
@@ -51,12 +52,13 @@ public class Search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        // Initialize
+        // Initialize values
         recyclerView = findViewById(R.id.listData);
+
+        // establish connection to the database
         database = FirebaseDatabase.getInstance().getReference("Items");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //txt = (AutoCompleteTextView)findViewById(R.id.textSearch);
 
         list = new ArrayList<>();
         final ArrayList<String> list1 = new ArrayList<>();
@@ -64,52 +66,72 @@ public class Search extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
 
 
-        /**
-         * will go through the realtime database in firebase and retrieve values stored
-         * @ ValueEventListener
-         */
         database.addValueEventListener(new ValueEventListener() {
+
+            /**
+             * will go through the realtime database in firebase and get key to a location
+             *
+             * Since we have 3 additional paths in our data we will have to repeat this process 4 more times to reach the point storing the data
+             *
+             * @param snapshot will create a copy of the data in the firebase realtime database
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (final DataSnapshot dataSnapshot : snapshot.getChildren()){
 
+
                     final String user = dataSnapshot.getKey();
-                    //list.add(user);
 
-                    //Toast.makeText(Search.this, "Failed" + dataSnapshot.getKey(),Toast.LENGTH_SHORT).show();
-
+                    // establish connection to the database and get reference to the next path
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Items").child(user);
                     ValueEventListener eventListener = new ValueEventListener() {
+
+                        /**
+                         * will go through the realtime database in firebase and get key to a location
+                         *
+                         * @param snapshot will create a copy of the data in the firebase realtime database
+                         */
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for(final DataSnapshot dataSnapshot1 : snapshot.getChildren()){
                                 final String user1 = dataSnapshot1.getKey();
 
-                                //Toast.makeText(Search.this, "Failed" + dataSnapshot1.getKey(),Toast.LENGTH_SHORT).show();
-
-
+                                // establish connection to the database and get reference to the next path
                                 DatabaseReference re = FirebaseDatabase.getInstance().getReference().child("Items").child(user).child(user1);
                                 ValueEventListener eventListener1 = new ValueEventListener() {
+
+                                    /**
+                                     * will go through the realtime database in firebase and get key to a location
+                                     *
+                                     * @param snapshot will create a copy of the data in the firebase realtime database
+                                     */
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         for(DataSnapshot dataSnapshot2 : snapshot.getChildren()){
                                             String user2 = dataSnapshot2.getKey();
 
-                                            //Toast.makeText(Search.this, "Failed" + dataSnapshot2.getKey(),Toast.LENGTH_SHORT).show();
 
-                                            DatabaseReference r = FirebaseDatabase.getInstance().getReference().child("Items").child(user).child(user1)
-                                                    .child(user2);
-
+                                            // get reference to the path in the realtime database holding the values that describe an item
+                                            DatabaseReference r = FirebaseDatabase.getInstance().getReference().child("Items").child(user).child(user1).child(user2);
                                             ValueEventListener eventListener2 = new ValueEventListener() {
+
+                                                /**
+                                                 * will go through the realtime database in firebase and get key to a location
+                                                 *
+                                                 * @param snapshot will create a copy of the data in the firebase realtime database
+                                                 */
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                     for(DataSnapshot dataSnapshot3 : snapshot.getChildren()){
+                                                        // will iterate through the values stored and retrieve them all
                                                         String item = dataSnapshot3.getValue().toString();
 
-
+                                                        // will add item object created from the retrieved data from dataSnapshot3
                                                         list1.add(item);
 
+                                                        // this will iterate through list1 and only get one items information by stopping after the 8th
+                                                        // element since an item should only have 8 characteristics
                                                         val++;
                                                         if(val%8 == 0) {
                                                             String name = list1.get(4);
@@ -120,19 +142,14 @@ public class Search extends AppCompatActivity {
                                                             String condition = list1.get(3);
                                                             String comments = list1.get(2);
 
-
-                                                            Item product = new Item(name, brand, quant);
-
+                                                            // use the item constructor from Item class to add the data for one product into the list
                                                             Item product2 = new Item(name, brand, condition, quant, price, color, comments);
 
 
-                                                            //Toast.makeText(Search.this, ""+ product.getQuantity(), Toast.LENGTH_SHORT).show();
-
-                                                            //list.add(product);
+                                                            // will add the object product to the list
                                                             list.add(product2);
 
-                                                            //Toast.makeText(Search.this, ""+ list.toString(), Toast.LENGTH_SHORT).show();
-
+                                                            //clear the list after data is added to the Arraylist list
                                                             list1.clear();
                                                         }
 
@@ -140,9 +157,14 @@ public class Search extends AppCompatActivity {
 
                                                         //Toast.makeText(Search.this, dataSnapshot3.getValue().toString(),Toast.LENGTH_SHORT).show();
                                                     }
+                                                    // update data
                                                     myAdapter.notifyDataSetChanged();
                                                 }
 
+                                                /**
+                                                 *
+                                                 * @param error
+                                                 */
                                                 @Override
                                                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -152,6 +174,10 @@ public class Search extends AppCompatActivity {
                                         }
                                     }
 
+                                    /**
+                                     *
+                                     * @param error
+                                     */
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
 
@@ -161,6 +187,10 @@ public class Search extends AppCompatActivity {
                             }
                         }
 
+                        /**
+                         *
+                         * @param error
+                         */
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
 
@@ -170,6 +200,10 @@ public class Search extends AppCompatActivity {
                 }
             }
 
+            /**
+             *
+             * @param error
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
