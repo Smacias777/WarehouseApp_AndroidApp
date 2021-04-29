@@ -9,6 +9,8 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
+ * @author Samir Macias, MArk Perez, Megan Jen
+ * @version 1.0
  * Is the 'Main Menu' of the application where all the potential options and or features to use are shown to the user
  */
 public class MainMenu extends AppCompatActivity {

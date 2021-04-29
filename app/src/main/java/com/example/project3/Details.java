@@ -19,6 +19,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * Contains essential details for a specific item
+ */
 public class Details extends AppCompatActivity {
     Button button;
     EditText txtName, txtBrand, txtQuant, txtPrice, txtColor, txtCondition, txtComments;

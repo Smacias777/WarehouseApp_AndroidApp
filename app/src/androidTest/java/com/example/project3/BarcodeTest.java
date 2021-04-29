@@ -1,4 +1,5 @@
 package com.example.project3;
+import org.junit.Test;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,44 +20,29 @@ import android.widget.Toast;
 
 import com.google.zxing.WriterException;
 
+import org.junit.Test;
+
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
-public class BarcodeTest extends AppCompatActivity {
+public class BarcodeTest  {
 
     private EditText dataEdt;
     private Button generateQrBtn;
     Bitmap bitmap;
     QRGEncoder qrgEncoder;
 
-    @Override
-    /**
-     * @param savedInstanceState
-     **/
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_barcode);
+
+@Test
+    public void onCreate(Bundle savedInstanceState) {
 
         // Receive the data(name of item) from AddItem class
-        Intent intent = getIntent();
         String newName = "message here";
 
         // initializing all variables.
         // variables for imageview, edittext,
         // button, bitmap and qrencoder.
-        ImageView qrCodeIV = findViewById(R.id.idIVQrcode);
-
-        // below line is for getting
-        // the windowmanager service.
-        WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
-
-        // initializing a variable for default display.
-        Display display = manager.getDefaultDisplay();
-
-        // creating a variable for point which
-        // is to be displayed in QR Code.
-        Point point = new Point();
-        display.getSize(point);
+        ImageView qrCodeIV = null;
 
         // getting width and
         // height of a point
@@ -81,6 +67,5 @@ public class BarcodeTest extends AppCompatActivity {
             // exception handling.
             Log.e("Tag", e.toString());
         }
-
     }
 }
