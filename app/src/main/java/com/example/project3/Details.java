@@ -26,6 +26,11 @@ public class Details extends AppCompatActivity {
     ArrayList<Item> list;
     private int val=0;
 
+    /**
+     * Initialize values, and add eventListeners for the activity's functionality
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,9 @@ public class Details extends AppCompatActivity {
         txtCondition = findViewById(R.id.condition);
         txtComments = findViewById(R.id.comments);
 
+        /**
+         * create an onClickListener for when the button is pressed to go back to the main menu
+         */
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,12 +57,16 @@ public class Details extends AppCompatActivity {
 
         list = new ArrayList<>();
         final ArrayList<String> list1 = new ArrayList<>();
+
+        // establish a connection to the database
         database = FirebaseDatabase.getInstance().getReference("Items");
 
+        // get intent from MyAdapter class which holds the data for an item inside string key
         Intent intent = getIntent();
         String key = intent.getStringExtra("key");
         database.orderByKey().equalTo(key);
 
+        // split up the data
         String b[] = key.split(",");
         final String name = b[0];
         String brand = b[1];
@@ -64,6 +76,7 @@ public class Details extends AppCompatActivity {
         String condition = b[5];
         String comments = b[6];
 
+        // set the data to the corresponding textView box
         txtName.setText(name);
         txtBrand.setText(brand);
         txtQuant.setText(quantity);
@@ -72,6 +85,5 @@ public class Details extends AppCompatActivity {
         txtCondition.setText(condition);
         txtComments.setText(comments);
 
-        //Toast.makeText(Details.this, name,Toast.LENGTH_SHORT).show();
     }
 }
