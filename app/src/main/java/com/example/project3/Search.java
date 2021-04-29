@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.EventListener;
 
+
 public class Search extends AppCompatActivity {
 
     private int val=0;
@@ -42,12 +43,15 @@ public class Search extends AppCompatActivity {
     ArrayList<Item> list;
     AutoCompleteTextView txt;
 
-
+    /**
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        // Initialize
         recyclerView = findViewById(R.id.listData);
         database = FirebaseDatabase.getInstance().getReference("Items");
         recyclerView.setHasFixedSize(true);
@@ -60,6 +64,10 @@ public class Search extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
 
 
+        /**
+         * will go through the realtime database in firebase and retrieve values stored
+         * @ ValueEventListener
+         */
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
