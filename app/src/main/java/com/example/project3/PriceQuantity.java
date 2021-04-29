@@ -136,8 +136,6 @@ public class PriceQuantity extends AppCompatActivity {
                 mCodeScanner.startPreview();
             }
         });
-
-
     }
 
     @Override

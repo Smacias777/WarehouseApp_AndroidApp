@@ -1,4 +1,7 @@
 package com.example.project3;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,8 +18,8 @@ import android.widget.Toast;
 
 import static org.junit.Assert.assertEquals;
 
-public class AddItemTest extends AppCompatActivity{
-
+public class AddItemTest extends AppCompatActivity
+{
     public static final String MESSAGE = "Something"; // key used to pass data using 'intent extras'
     private String name = "";
     private String type = "";
@@ -26,7 +29,8 @@ public class AddItemTest extends AppCompatActivity{
     private String price = "";
     private String color = "";
     private String comments = "";
-    public void clickEnter(View obj) {
+    public void clickEnter(View obj)
+    {
         name = "phone";
         brand = "idk";
         quantity = "6";
@@ -38,7 +42,6 @@ public class AddItemTest extends AppCompatActivity{
         String message = name;
         intent.putExtra(MESSAGE, message);
         startActivity(intent);
-
     }
 
     public void chooseType(View obj)
@@ -60,6 +63,11 @@ public class AddItemTest extends AppCompatActivity{
         Button usedButton = (Button) obj;
         usedButton.getText().equals("Used");
         assertEquals("Used", condition);
+    }
+    @Test
+    public void useAppContext() {
+        // Context of the app under test.
+        assertEquals(1, 0 + 1);
     }
 }
 

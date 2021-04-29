@@ -45,8 +45,8 @@ public class ScanInTest extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(ScanInTest.this, result.getText(), Toast.LENGTH_SHORT).show();  // displays toast of what the QR code represents
-                        TextView text = findViewById(R.id.camera_text);
-                        text.setText(result.getText());
+                    //    TextView text = findViewById(R.id.camera_text);
+                    //    text.setText(result.getText());
                     }
                 });
             }
