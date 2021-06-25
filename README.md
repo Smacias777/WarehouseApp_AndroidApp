@@ -74,3 +74,15 @@ All the important deadlines were placed within both ZenHub and GitHub. We would 
 
 Some dependencies required for this application would include the need for a collection of data for every single employee. Each employee has their own account. This app would have a personal profile for each employee and all the work done by that employee would be found in that account. Thus, if any mistakes are made then it would be clearly seen in the data collected by the app. Additionally, data for each individual product would be needed. Just as each employee has a personal profile, each product in a way also has a profile with specific information. Lastly, a camera API is required for this application. As it is one of its main functions that will allow any employee to process products quickly.
 
+## User Interface
+![](https://github.com/Smacias777/WarehouseApp_AndroidApp/blob/master/UI/pic1.PNG)
+![](https://github.com/Smacias777/WarehouseApp_AndroidApp/blob/master/UI/pic11.PNG)
+![](https://github.com/Smacias777/WarehouseApp_AndroidApp/blob/master/UI/pic2.PNG)
+![](https://github.com/Smacias777/WarehouseApp_AndroidApp/blob/master/UI/pic3.PNG)
+![](https://github.com/Smacias777/WarehouseApp_AndroidApp/blob/master/UI/pic10.PNG)
+![](https://github.com/Smacias777/WarehouseApp_AndroidApp/blob/master/UI/pic4.PNG)
+![](https://github.com/Smacias777/WarehouseApp_AndroidApp/blob/master/UI/pic5.PNG)
+![](https://github.com/Smacias777/WarehouseApp_AndroidApp/blob/master/UI/pic6.PNG)
+![](https://github.com/Smacias777/WarehouseApp_AndroidApp/blob/master/UI/pic7.PNG)
+![](https://github.com/Smacias777/WarehouseApp_AndroidApp/blob/master/UI/pic8.PNG)
+![](https://github.com/Smacias777/WarehouseApp_AndroidApp/blob/master/UI/pic9.PNG)
